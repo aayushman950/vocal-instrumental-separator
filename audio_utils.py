@@ -1,43 +1,58 @@
-import librosa
-import librosa.display
 import numpy as np
 import soundfile as sf
-import matplotlib.pyplot as plt
 import os
+from scipy.signal import stft, istft
+from scipy.ndimage import median_filter
 
-def load_audio_librosa(file_path):
-    y, sr = librosa.load(file_path, sr=None, mono=True)
+def load_audio(file_path):
+    y, sr = sf.read(file_path)
+    if y.ndim > 1:
+        y = np.mean(y, axis=1)  # convert to mono if stereo
     return y, sr
 
+def softmask(X, X_ref, power=2):
+    """Compute a soft mask for source separation"""
+    X = np.maximum(X, 1e-10)
+    X_ref = np.maximum(X_ref, 1e-10)
+    return (X ** power) / (X ** power + X_ref ** power)
+
 def extract_vocals_instrumentals(file_path):
-    y, sr = librosa.load(file_path, sr=None)
-    S_full, phase = librosa.magphase(librosa.stft(y))
+    y, sr = load_audio(file_path)
 
-    S_filter = librosa.decompose.nn_filter(
-        S_full,
-        aggregate=np.median,
-        metric='cosine',
-        width=int(librosa.time_to_frames(2, sr=sr))
-    )
-    S_filter = np.minimum(S_full, S_filter)
+    # Parameters
+    n_fft = 2048
+    hop_length = n_fft // 4
 
+    # STFT
+    f, t, Zxx = stft(y, fs=sr, nperseg=n_fft, noverlap=n_fft - hop_length)
+    S_full = np.abs(Zxx)
+    phase = np.exp(1j * np.angle(Zxx))
+
+    # Spectral filtering using median filtering
+    S_filter = median_filter(S_full, size=(1, 15))  # median over time (31 frames ~ 2s)
+
+    # Masking
     margin_i, margin_v = 2, 10
     power = 2
 
-    mask_i = librosa.util.softmask(S_filter, margin_i * (S_full - S_filter), power=power)
-    mask_v = librosa.util.softmask(S_full - S_filter, margin_v * S_filter, power=power)
+    mask_i = softmask(S_filter, margin_i * (S_full - S_filter), power=power)
+    mask_v = softmask(S_full - S_filter, margin_v * S_filter, power=power)
 
     S_foreground = mask_v * S_full
     S_background = mask_i * S_full
 
-    y_foreground = librosa.istft(S_foreground * phase)
-    y_background = librosa.istft(S_background * phase)
+    # Reconstruct complex spectrograms
+    Zxx_fore = S_foreground * phase
+    Zxx_back = S_background * phase
 
-    # Ensure output folder exists
+    # ISTFT
+    _, y_foreground = istft(Zxx_fore, fs=sr, nperseg=n_fft, noverlap=n_fft - hop_length)
+    _, y_background = istft(Zxx_back, fs=sr, nperseg=n_fft, noverlap=n_fft - hop_length)
+
+    # Save output
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
 
-    # Construct output file paths
     base_filename = os.path.splitext(os.path.basename(file_path))[0]
     vocal_path = os.path.join(output_dir, f"{base_filename}_vocals.wav")
     instr_path = os.path.join(output_dir, f"{base_filename}_instrumentals.wav")
