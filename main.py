@@ -45,6 +45,11 @@ class AudioApp:
 
     def get_selected_song_path(self):
         selection = self.listbox.get(tk.ACTIVE)
+    
+        # Check if it's a processed file (vocals or instrumentals)
+        if selection.endswith("_vocals.wav") or selection.endswith("_instrumentals.wav"):
+            return os.path.join("output", selection)
+        
         return os.path.join(self.songs_dir, selection)
 
     def play(self):
