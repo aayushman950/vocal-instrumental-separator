@@ -3,6 +3,8 @@ from tkinter import filedialog, messagebox
 import os
 from audio_utils import *
 from playback import *
+from visualize_utils import plot_waveform
+
 
 class AudioApp:
     def __init__(self, root):
@@ -30,6 +32,8 @@ class AudioApp:
         tk.Button(controls, text="Stop", width=12, command=self.stop).grid(row=0, column=2, padx=5)
         tk.Button(controls, text="Extract", width=12, command=self.extract).grid(row=0, column=3, padx=5)
         tk.Button(controls, text="Extract (Librosa)", width=15, command=self.extract_librosa).grid(row=0, column=4, padx=5)
+        tk.Button(controls, text="Plot Waveform", width=15, command=self.plot_waveform).grid(row=0, column=5, padx=5)
+
 
         # On close
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
@@ -85,7 +89,19 @@ class AudioApp:
             if fname not in self.listbox.get(0, "end"):
                 self.listbox.insert(tk.END, fname)
         messagebox.showinfo("Done", "Vocal/Instrumental extraction complete.")
-
+    
+    def plot_waveform(self):
+        path = self.get_selected_song_path()
+        if not path:
+            messagebox.showerror("Error", "No song selected.")
+            return
+        try:
+            out_path = plot_waveform(path)
+            messagebox.showinfo("Saved", f"Waveform plot saved to:\n{out_path}")
+        except Exception as e:
+            messagebox.showerror("Plot Error", f"Could not generate waveform plot:\n{e}")
+    
+    
     def on_close(self):
         stop_audio()
         self.root.destroy()
