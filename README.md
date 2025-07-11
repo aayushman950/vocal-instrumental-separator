@@ -19,18 +19,18 @@ This Python project separates vocals and instrumentals from `.wav` audio files u
   - `matplotlib`
   - `tkinter`
 
-Install with:
 
-```bash
-pip install -r requirements.txt
-```
-
-🚀 How to Run
+## 🚀 How to Run
 Clone the Repository
 
 ```bash
 git clone https://github.com/aayushman950/vocal-instrumental-separator.git
 cd vocal-instrumental-separator
+```
+Install required packages with:
+
+```bash
+pip install -r requirements.txt
 ```
 
 Run the application
