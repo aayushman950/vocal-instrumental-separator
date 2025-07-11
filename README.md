@@ -29,8 +29,6 @@ pip install -r requirements.txt
 Clone the Repository
 
 ```bash
-Copy
-Edit
 git clone https://github.com/aayushman950/vocal-instrumental-separator.git
 cd vocal-instrumental-separator
 ```
@@ -40,31 +38,24 @@ Run the application
 python main.py
 ```
 
-How to Use
-Click "Add Song" to load a .wav file into the app.
+# How to Use
 
-Click on the song.
+- Click **"Add Song"** to load a `.wav` file into the app.  
+- Click on the song in the list.  
+- Use **Play**, **Pause**, and **Stop** to control playback.  
+- Click **"Extract"** to generate:  
+  - `*_vocals.wav` and `*_instrumentals.wav`  
+  - These files are saved in the `/output/` folder.  
 
-Use Play, Pause, and Stop to control playback.
+## 📊 Waveform Visualization
 
-Click "Extract" to generate:
+Waveform plots are automatically saved as images for:  
+- Original audio  
+- Extracted vocals  
+- Extracted instrumentals  
 
-*_vocals.wav and *_instrumentals.wav
+You can find these images in the `/graphs/` directory.  
 
-Saved in the /output/ folder
+## 🎧 Sample Outputs
 
-Waveforms are saved in the /graphs/ folder.
-
-📊 Waveform Visualization
-Waveform plots are automatically saved as images for:
-
-Original audio
-
-Extracted vocals
-
-Extracted instrumentals
-
-You can find these in the /graphs/ directory.
-
-🎧 Sample Outputs
-The input and output .wav files, including examples extracted using both manual and Librosa methods, are available in the /output/ directory
+The input and output `.wav` files, including examples extracted using both manual and Librosa methods, are available in the `/output/` directory.
