@@ -37,8 +37,6 @@ cd vocal-instrumental-separator
 
 Run the application
 ```bash
-Copy
-Edit
 python main.py
 ```
 
