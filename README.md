@@ -28,19 +28,21 @@ pip install -r requirements.txt
 🚀 How to Run
 Clone the Repository
 
-bash
+```bash
 Copy
 Edit
 git clone https://github.com/aayushman950/vocal-instrumental-separator.git
 cd vocal-instrumental-separator
+```
 
 Run the application
-bash
+```bash
 Copy
 Edit
 python main.py
 🧪 How to Use
 Click "Add Song" to load a .wav file into the app.
+```
 
 Use Play, Pause, and Stop to control playback.
 
