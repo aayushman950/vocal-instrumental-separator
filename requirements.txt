@@ -1,4 +1,7 @@
 numpy
+scipy
+matplotlib
 librosa
 pygame
+tk
 soundfile
