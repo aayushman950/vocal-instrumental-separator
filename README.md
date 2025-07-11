@@ -17,7 +17,7 @@ This Python project separates vocals and instrumentals from `.wav` audio files u
   - `soundfile`
   - `pygame`
   - `matplotlib`
-  - `tkinter` *(built-in)*
+  - `tkinter`
 
 Install with:
 
