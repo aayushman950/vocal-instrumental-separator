@@ -29,6 +29,7 @@ class AudioApp:
         tk.Button(controls, text="Pause/Resume", width=12, command=self.pause).grid(row=0, column=1, padx=5)
         tk.Button(controls, text="Stop", width=12, command=self.stop).grid(row=0, column=2, padx=5)
         tk.Button(controls, text="Extract", width=12, command=self.extract).grid(row=0, column=3, padx=5)
+        tk.Button(controls, text="Extract (Librosa)", width=15, command=self.extract_librosa).grid(row=0, column=4, padx=5)
 
         # On close
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
@@ -43,14 +44,26 @@ class AudioApp:
             if filename not in self.listbox.get(0, "end"):
                 self.listbox.insert(tk.END, filename)
 
+    def extract_librosa(self):
+        path = self.get_selected_song_path()
+        if not path: return
+        from audio_utils import extract_vocals_instrumentals_librosa
+        vocal, instr = extract_vocals_instrumentals_librosa(path)
+        for f in [vocal, instr]:
+            fname = os.path.basename(f)
+            if fname not in self.listbox.get(0, "end"):
+                self.listbox.insert(tk.END, fname)
+        messagebox.showinfo("Done", "Librosa-based extraction complete.")
+
+
     def get_selected_song_path(self):
         selection = self.listbox.get(tk.ACTIVE)
-    
-        # Check if it's a processed file (vocals or instrumentals)
-        if selection.endswith("_vocals.wav") or selection.endswith("_instrumentals.wav"):
-            return os.path.join("output", selection)
-        
-        return os.path.join(self.songs_dir, selection)
+        song_path = os.path.join(self.songs_dir, selection)
+        if not os.path.exists(song_path):
+            # Check in output folder (for extracted files)
+            song_path = os.path.join("output", selection)
+        return song_path
+
 
     def play(self):
         song_path = self.get_selected_song_path()
