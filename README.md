@@ -40,9 +40,12 @@ Run the application
 Copy
 Edit
 python main.py
-🧪 How to Use
-Click "Add Song" to load a .wav file into the app.
 ```
+
+How to Use
+Click "Add Song" to load a .wav file into the app.
+
+Click on the song.
 
 Use Play, Pause, and Stop to control playback.
 
