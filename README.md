@@ -43,18 +43,15 @@ python main.py
 - Click **"Add Song"** to load a `.wav` file into the app.  
 - Click on the song in the list.  
 - Use **Play**, **Pause**, and **Stop** to control playback.  
-- Click **"Extract"** to generate:  
-  - `*_vocals.wav` and `*_instrumentals.wav`  
-  - These files are saved in the `/output/` folder.  
+- Click **"Extract"** to generate the separated files created via manual implementation.
+- Click **"Extract(Librosa)"** to generate the separated files created via the Librosa library.
+- These files are saved in the `/output/` folder.  
 
 ## 📊 Waveform Visualization
 
-Waveform plots are automatically saved as images for:  
-- Original audio  
-- Extracted vocals  
-- Extracted instrumentals  
+Press the **"Plot Waveform"** button to generate a plot of the selected audio.
 
-You can find these images in the `/graphs/` directory.  
+Waveform plots are automatically saved as images in the `/graphs/` directory.  
 
 ## 🎧 Sample Outputs
 
