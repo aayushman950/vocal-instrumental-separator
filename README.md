@@ -50,4 +50,4 @@ python main.py
 
 ## 🎧 Outputs 📊
 - Waveform plots are automatically saved as images in the `/graphs/` directory.  
-- The input and output `.wav` files, including examples extracted using both manual and Librosa methods, are available in the `/output/` directory.
+- The output `.wav` files are saved in the `/output/` directory.
