@@ -23,6 +23,7 @@ Install with:
 
 ```bash
 pip install -r requirements.txt
+```
 
 🚀 How to Run
 Clone the Repository
@@ -30,10 +31,10 @@ Clone the Repository
 bash
 Copy
 Edit
-git clone https://github.com/your-username/vocal-instrumental-separator.git
+git clone https://github.com/aayushman950/vocal-instrumental-separator.git
 cd vocal-instrumental-separator
-Run the Application
 
+Run the application
 bash
 Copy
 Edit
@@ -63,23 +64,4 @@ Extracted instrumentals
 You can find these in the /graphs/ directory.
 
 🎧 Sample Outputs
-The input and output .wav files, including examples extracted using both manual and Librosa methods, are available here:
-
-🔗 GitHub Output Folder
-
-⚙️ Git Ignore
-The .gitignore includes:
-
-gitignore
-Copy
-Edit
-__pycache__/
-*.pyc
-To remove previously committed __pycache__:
-
-bash
-Copy
-Edit
-git rm -r --cached __pycache__/
-git commit -m "Remove pycache from repo"
-git push
+The input and output .wav files, including examples extracted using both manual and Librosa methods, are available in the /output/ directory
